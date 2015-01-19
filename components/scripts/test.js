@@ -1,3 +1,3 @@
 var hello = function() {
-  console.log('Hello Udacifiriends!');
+  console.log('Hello Udacifriends!');
 }(); // anonymous closure

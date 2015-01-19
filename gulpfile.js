@@ -25,13 +25,13 @@ if (env==='development') {
 }
 
 
-jsSources = ['components/scripts/main.js'];
+jsSources = ['components/scripts/app.js', 'components/scripts/test.js'];
 htmlSources = [outputDir + '*.html'];
 jsonSources = [outputDir + 'js/*.json'];
 
 gulp.task('js', function() {
   gulp.src(jsSources)
-    .pipe(concat('script.js'))
+    .pipe(concat('app.js'))
     .pipe(browserify())
     .pipe(gulpif(env === 'production', uglify()))
     .pipe(gulp.dest(outputDir + 'js'))
