@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>Udacifriends</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/lib/angular/angular.min.js"></script>
+  <script src="js/lib/angular/angular-route.min.js"></script>
+  <script src="js/lib/angular/angular-animate.min.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers/registration.js"></script>
+</head>
+<body>
+<header>
+  <nav class="cf" ng-include="'views/nav.html'"></nav>
+</header>
+<div class="page">
+  <main class="cf">
+    <h1>Hello {{name}}</h1>
+    <input ng-model="name" placeholder="Enter your name">
+  </main>
+</div>
+</body>
+</html>
