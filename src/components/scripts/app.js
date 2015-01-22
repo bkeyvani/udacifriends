@@ -1,11 +1,13 @@
-var app = angular.module('udacifriendsApp', ['ngRoute', 'appControllers']);
+var app = angular.module('udacifriendsApp',
+  ['ngRoute', 'firebase', 'appControllers']);
 
-var appControllers = angular.module('appControllers', []);
+var appControllers = angular.module('appControllers', ['firebase']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/login', {
-      templateUrl: 'views/login.html'
+      templateUrl: 'views/login.html',
+      controller: 'RegistrationController'
   }).
     when('/register', {
       templateUrl: 'views/register.html'
