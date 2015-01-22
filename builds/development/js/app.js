@@ -22,8 +22,16 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-var hello = function() {
-  console.log('Hello Udacifriends!');
-}(); // anonymous closure
+
+app.controller('RegistrationController', function($scope, $location){
+
+  $scope.login = function() {
+    $location.path('/friends');
+  } // login
+
+  $scope.register = function() {
+    $location.path('/messages');
+  } // register
+}); //RegistrationController
 
 },{}]},{},[1])

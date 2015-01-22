@@ -25,9 +25,9 @@ if (env==='development') {
 }
 
 
-jsSources = ['components/scripts/app.js', 'components/scripts/test.js'];
-htmlSources = [outputDir + '*.html'];
-jsonSources = [outputDir + 'js/*.json'];
+jsSources = ['src/components/scripts/app.js',
+             'src/components/scripts/controllers/registration.js'];
+htmlSources = ['src/*.html', 'src/components/**/*.html'];
 
 gulp.task('js', function() {
   gulp.src(jsSources)
@@ -38,10 +38,15 @@ gulp.task('js', function() {
     .pipe(connect.reload())
 });
 
+gulp.task('css', function() {
+  gulp.src('src/components/css/*.css')
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(outputDir + 'css'))
+    .pipe(connect.reload())
+});
 gulp.task('watch', function() {
   gulp.watch(jsSources, ['js']);
-  gulp.watch('builds/development/*.html', ['html']);
-  gulp.watch('builds/development/js/*.json', ['json']);
+  gulp.watch('src/**/*.html', ['html']);
   gulp.watch('builds/development/images/**/*.*', ['images']);
 });
 
@@ -53,9 +58,9 @@ gulp.task('connect', function() {
 });
 
 gulp.task('html', function() {
-  gulp.src('builds/development/*.html')
+  gulp.src(htmlSources)
     .pipe(gulpif(env === 'production', minifyHTML()))
-    .pipe(gulpif(env === 'production', gulp.dest(outputDir)))
+    .pipe(gulp.dest(outputDir))
     .pipe(connect.reload())
 });
 
@@ -75,4 +80,4 @@ gulp.task('json', function() {
     .pipe(gulpif(env === 'production', gulp.dest('builds/production/js')))
     .pipe(connect.reload()) });
 
-gulp.task('default', ['html', 'json', 'js', 'images', 'connect', 'watch']);
+gulp.task('default', ['html', 'css', 'json', 'js', 'images', 'connect', 'watch']);
