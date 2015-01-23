@@ -9,7 +9,7 @@ app.controller("RegistrationController", ["$scope", "$firebaseAuth", "$location"
         password: $scope.user.password
       }).then(function(authData) {
         console.log("Logged in as:", authData.uid);
-        $location.path('/meetings');
+        $location.path('/messages');
       }).catch(function(error) {
         console.error("Authentication failed:", error);
         $scope.message = error.toString();
@@ -17,7 +17,7 @@ app.controller("RegistrationController", ["$scope", "$firebaseAuth", "$location"
     }
 
     $scope.register = function() {
-      $location.path('/meetings');
+      $location.path('/messages');
     } //login
   }
 ]);

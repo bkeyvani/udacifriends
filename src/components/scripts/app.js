@@ -10,7 +10,8 @@ app.config(['$routeProvider', function($routeProvider) {
       controller: 'RegistrationController'
   }).
     when('/register', {
-      templateUrl: 'views/register.html'
+      templateUrl: 'views/register.html',
+      controller: 'RegistrationController'
   }).
     when('/friends', {
       templateUrl: 'views/friends.html'
