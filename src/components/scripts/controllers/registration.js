@@ -1,6 +1,7 @@
-app.controller("RegistrationController", ["$scope", "$firebaseAuth", "$location",
-  function($scope, $firebaseAuth, $location) {
-    var ref = new Firebase("https://udacifriendz.firebaseio.com/");
+app.controller('RegistrationController',
+  ['$scope', '$firebaseAuth', '$location', 'FIREBASE_URL',
+  function($scope, $firebaseAuth, $location, FIREBASE_URL) {
+    var ref = new Firebase(FIREBASE_URL);
     var auth = $firebaseAuth(ref);
 
     $scope.login = function() {
@@ -8,10 +9,10 @@ app.controller("RegistrationController", ["$scope", "$firebaseAuth", "$location"
         email: $scope.user.email,
         password: $scope.user.password
       }).then(function(authData) {
-        console.log("Logged in as:", authData.uid);
+        console.log('Logged in as:', authData.uid);
         $location.path('/messages');
       }).catch(function(error) {
-        console.error("Authentication failed:", error);
+        console.error('Authentication failed:', error);
         $scope.message = error.toString();
       });
     }

@@ -1,9 +1,11 @@
-var app = angular.module('udacifriendsApp',
-  ['ngRoute', 'firebase', 'appControllers']);
+var app = angular
+  .module('udacifriendsApp', ['ngRoute', 'firebase', 'appControllers'])
+  .constant('FIREBASE_URL', 'https://udacifriendz.firebaseio.com/');
 
 var appControllers = angular.module('appControllers', ['firebase']);
 
-app.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider',
+function($routeProvider, FIREBASE_URL) {
   $routeProvider.
     when('/login', {
       templateUrl: 'views/login.html',
