@@ -1,14 +1,10 @@
 app.controller('RegistrationController',
   ['$scope', '$firebaseAuth', '$location', 'FIREBASE_URL',
-  function($scope, $firebaseAuth, $location, FIREBASE_URL) {
-    var ref = new Firebase(FIREBASE_URL);
-    var auth = $firebaseAuth(ref);
+  function($scope, $firebaseAuth, $location, FIREBASE_URL, Authentication) {
 
     $scope.login = function() {
-      auth.$authWithPassword({
-        email: $scope.user.email,
-        password: $scope.user.password
-      }).then(function(authData) {
+      Authentication.login($scope.user)
+      .then(function(authData) {
         console.log('Logged in as:', authData.uid);
         $location.path('/messages');
       }).catch(function(error) {
