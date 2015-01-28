@@ -1,11 +1,10 @@
 app.controller('RegistrationController',
-  ['$scope', '$firebaseAuth', '$location', 'FIREBASE_URL',
-  function($scope, $firebaseAuth, $location, FIREBASE_URL, Authentication) {
+  ['$scope', '$rootScope', '$location', 'AuthFactory',
+  function($scope, $rootScope, $location, AuthFactory) {
 
     $scope.login = function() {
-      Authentication.login($scope.user)
+      AuthFactory.login($scope.user)
       .then(function(authData) {
-        console.log('Logged in as:', authData.uid);
         $location.path('/messages');
       }).catch(function(error) {
         console.error('Authentication failed:', error);

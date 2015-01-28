@@ -1,17 +1,17 @@
-app.factory('Authentication',
-function($firebase, $firebaseAuth, FIREBASE_URL, $location) {
+app.factory('AuthFactory',
+function($firebaseAuth, FIREBASE_URL) {
 
   var ref = new Firebase(FIREBASE_URL);
-  var auth = $firebaseAuth(ref);
+  var authObj = $firebaseAuth(ref);
 
-  var authObj = {
+  var auth = {
     login: function(user){
-      return auth.$authWithPassword({
+      return authObj.$authWithPassword({
         email: user.email,
         password: user.password
-      });
+      })
     } // login
-  }; // authObj
+  }; // auth
 
-  return authObj
+  return auth
 });

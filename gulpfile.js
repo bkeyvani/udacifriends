@@ -26,7 +26,8 @@ if (env==='development') {
 
 
 jsSources = ['src/components/scripts/app.js',
-             'src/components/scripts/controllers/registration.js'];
+             'src/components/scripts/services/*.js',
+             'src/components/scripts/controllers/*.js'];
 htmlSources = ['src/*.html', 'src/components/**/*.html'];
 
 gulp.task('js', function() {

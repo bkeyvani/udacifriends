@@ -22,6 +22,11 @@
   <nav class="cf" ng-include="'views/nav.html'"></nav>
 </header>
 <div class="page">
+  <div class="userinfo"
+    ng-controller="StatusController" ng-show="userEmail">
+    <span class="user">Hi {{userEmail}}</span>
+    <a href="#">Logout</a>
+  </div>
   <main class="cf" ng-view></main>
 </div>
 </body>
