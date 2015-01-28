@@ -9,7 +9,10 @@ function($firebaseAuth, FIREBASE_URL) {
         email: user.email,
         password: user.password
       });
-    } // login
+    }, // login
+    logout: function() {
+      return this.authObj.$unauth();
+    } // logout
   }; // auth
 
   return auth

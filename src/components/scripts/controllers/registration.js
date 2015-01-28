@@ -1,6 +1,6 @@
 app.controller('RegistrationController',
-  ['$scope', '$rootScope', '$location', 'AuthFactory',
-  function($scope, $rootScope, $location, AuthFactory) {
+  ['$scope', '$location', 'AuthFactory',
+  function($scope, $location, AuthFactory) {
 
     $scope.login = function() {
       AuthFactory.login($scope.user)
