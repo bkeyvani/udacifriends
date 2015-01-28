@@ -14,6 +14,6 @@ app.controller('RegistrationController',
 
     $scope.register = function() {
       $location.path('/messages');
-    } //login
+    } // login
   }
 ]);

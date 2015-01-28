@@ -1,8 +1,7 @@
 app.controller('StatusController',
-function($scope, $rootScope, $firebaseAuth, FIREBASE_URL) {
+function($scope, $rootScope, AuthFactory) {
 
-  var ref = new Firebase(FIREBASE_URL);
-  $rootScope.authObj = $firebaseAuth(ref);
+  $rootScope.authObj = AuthFactory.authObj;
 
   $rootScope.authObj.$onAuth(function(authData) {
     if (authData) {
