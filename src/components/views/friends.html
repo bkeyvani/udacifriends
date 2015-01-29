@@ -1,2 +1,15 @@
-<h1>Udacifirends</h1>
-<p>List of your Udacifriends!</p>
+<section class="meetings cf">
+
+  <div ng-hide="currentUser" class="sorry">
+    <h1>Sorry</h1>
+    <p>You need to be logged in to interact with your Udacifirends.</p>
+    <p>Please <a ng-href="#/register">Register</a>
+      or <a ng-href="#/login">Login</a></p>
+  </div>
+
+  <div ng-show="currentUser" class="displaymessages">
+    <h2>List of your Udacifriends</h2>
+
+  </div><!-- Display Messages -->
+</section>
+

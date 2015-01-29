@@ -36,6 +36,11 @@ function($firebase, $firebaseAuth, FIREBASE_URL) {
     logout: function() {
       return this.authObj.$unauth();
     }, // logout
+
+    isSignedIn: function() {
+      return this.authObj.$getAuth() != null;
+    } // signedIn
+
   }; // auth
 
   return auth
