@@ -18,7 +18,7 @@ function($firebase, $firebaseAuth, FIREBASE_URL) {
         password: user.password
       })
       .then(function(regUser) {
-        var ref = new Firebase(FIREBASE_URL + 'users');
+        var ref = new Firebase(FIREBASE_URL + 'users/');
         var firebaseUsers = $firebase(ref);
 
         var userInfo = {

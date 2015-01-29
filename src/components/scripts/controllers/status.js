@@ -1,5 +1,5 @@
 app.controller('StatusController',
-function($scope, $rootScope, AuthFactory, $location) {
+function($scope, $rootScope, $firebase, AuthFactory, FIREBASE_URL, $location) {
 
   $scope.logout = function() {
     AuthFactory.logout();
@@ -9,12 +9,14 @@ function($scope, $rootScope, AuthFactory, $location) {
 
   $rootScope.authObj.$onAuth(function(authData) {
     if (authData) {
-      console.log("User logged-in");
-      $scope.userEmail = authData.password.email;
+      var ref = new Firebase(FIREBASE_URL + 'users/' + authData.uid)
+      var user = $firebase(ref).$asObject();
+
+      user.$loaded().then(function() {
+        $rootScope.currentUser = user;
+      });
     } else {
-      console.log("Not logged-in");
-      $scope.userEmail = null;
-      $location.path('/login');
+        $rootScope.currentUser = null;
     }
   }); // authObj $onAuth event
 });
