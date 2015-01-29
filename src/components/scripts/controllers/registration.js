@@ -13,7 +13,7 @@ app.controller('RegistrationController',
 
     $scope.register = function() {
       AuthFactory.register($scope.user)
-      .then(function() {
+      .then(function(regUser) {
         $scope.login();
       }).catch(function(error) {
         $scope.message = error.toString();
