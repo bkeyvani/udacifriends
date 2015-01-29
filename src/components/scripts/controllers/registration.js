@@ -4,16 +4,20 @@ app.controller('RegistrationController',
 
     $scope.login = function() {
       AuthFactory.login($scope.user)
-      .then(function(authData) {
+      .then(function() {
         $location.path('/messages');
       }).catch(function(error) {
-        console.error('Authentication failed:', error);
+        $scope.message = 'Incorrect Username or Password. Please try again.';
+      });
+    };
+
+    $scope.register = function() {
+      AuthFactory.register($scope.user)
+      .then(function() {
+        $scope.login();
+      }).catch(function(error) {
         $scope.message = error.toString();
       });
     }
-
-    $scope.register = function() {
-      $location.path('/messages');
-    } // login
   }
 ]);
