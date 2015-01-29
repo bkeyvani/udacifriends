@@ -1,8 +1,10 @@
 <section class="login">
   <form name="loginform" novalidate
     ng-submit="login()">
-    <h1>Hi there {{name}}!</h1>
+    <h1>Hi there!</h1>
     <p>Log-in to access the awesomeness!</p>
+
+    <p class="error formerror" ng-show="message">{{message}}</p>
 
     <input type="email" name="email" placeholder="Email" autofocus
       ng-model="user.email" ng-required="true">
