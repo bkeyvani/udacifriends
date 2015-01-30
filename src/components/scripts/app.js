@@ -19,7 +19,8 @@ function($routeProvider, FIREBASE_URL) {
       templateUrl: 'views/friends.html'
   }).
     when('/messages', {
-      templateUrl: 'views/messages.html'
+      templateUrl: 'views/messages.html',
+      controller: 'MessagesController'
   }).
   otherwise({
     redirectTo: '/'

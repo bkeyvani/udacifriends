@@ -9,6 +9,22 @@
 
   <div ng-show="currentUser" class="displaymessages">
     <h2>Your Messages</h2>
+    <div id="messageContainer">
+      <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
+      messages?</p>
+      <div id="from">
+        <ul>
+          <li class="fromInfo"
+            ng-repeat="(key, message) in messages">
+            <a href="#"
+              ng-click="displayMessage(key)">{{message.from}}</a>
+          </li>
+        </ul>
+      </div><!-- messageContainer -->
+      <div id="messageArea">
+
+      </div><!-- #messageArea-->
+    </div>
 
   </div><!-- Display Messages -->
 </section>
