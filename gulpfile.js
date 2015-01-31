@@ -30,6 +30,8 @@ jsSources = ['src/components/scripts/app.js',
              'src/components/scripts/controllers/*.js'];
 htmlSources = ['src/*.html', 'src/components/**/*.html'];
 
+cssSources = ['src/components/css/*.css'];
+
 gulp.task('js', function() {
   gulp.src(jsSources)
     .pipe(concat('app.js'))
@@ -47,6 +49,7 @@ gulp.task('css', function() {
 });
 gulp.task('watch', function() {
   gulp.watch(jsSources, ['js']);
+  gulp.watch(cssSources, ['css']);
   gulp.watch('src/**/*.html', ['html']);
   gulp.watch('builds/development/images/**/*.*', ['images']);
 });

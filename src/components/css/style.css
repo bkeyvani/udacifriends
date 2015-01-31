@@ -520,7 +520,7 @@ nav ul li a:hover {
 .addmeeting button {
   width: 60px;
   margin-left: 20px;
-  vertical-align: center;
+  vertical-align: middle;
 }
 
 .meetings {
@@ -597,3 +597,86 @@ nav ul li a:hover {
 .checkinslist h1 { color: #AC3213; }
 .checkinslist h2 { color:#145569; }
 .checkinslist h3 { color: #657B83; }
+
+/* messages */
+section.messages {
+  padding-top: 10px;
+  text-align: initial;
+  min-height: 500px;
+  position: relative;
+  overflow: scroll;
+}
+
+#messageArea {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  min-width: 600px;
+}
+
+#messageList {
+  float: left;
+  min-width: 150px;
+}
+
+#messageList #inbox{
+  border-bottom: 1px solid #aaa;
+  margin: 0 20px 0 0;
+  padding-bottom: 15px;
+}
+
+#messageList #fromList {
+  margin: 15px 0 0 0;
+}
+
+#messages {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 150px;
+  right: 0;
+}
+
+#messagesHeader {
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 12px;
+}
+
+#messagesHeader h2 {
+  display: inline-block;
+}
+
+#messagesHeader button {
+  float: right;
+}
+
+#messagesContent ul li.date {
+  border-top: 1px solid #e8e8e8;
+  color: #bdc1c9;
+  font-size: 11px;
+  margin: 17px 20px 2px;
+  text-align: center;
+}
+
+#messageContent ul li.message {
+  padding: 8px 20px 7px;
+}
+
+#replyArea {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+  left: 0;
+}
+
+#replyArea textarea {
+  vertical-align: top;
+  height: 38px;
+  width: 80%;
+  padding: 3px 7px;
+}
+
+#replyArea button {
+  float: right;
+}

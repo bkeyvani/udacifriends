@@ -1,4 +1,4 @@
-<section class="meetings cf">
+<section class="messages cf">
 
   <div ng-hide="currentUser" class="sorry">
     <h1>Sorry</h1>
@@ -7,24 +7,43 @@
       or <a ng-href="#/login">Login</a></p>
   </div>
 
-  <div ng-show="currentUser" class="displaymessages">
-    <h2>Your Messages</h2>
-    <div id="messageContainer">
-      <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
-      messages?</p>
-      <div id="from">
+  <div ng-show="currentUser" id="messageArea">
+    <div id="messageList">
+      <p id="inbox">Inbox <strong>({{messageCnt}})</strong></p>
+      <div id="fromList">
+        <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
+        messages?</p>
         <ul>
-          <li class="fromInfo"
-            ng-repeat="(key, message) in messages">
-            <a href="#"
-              ng-click="displayMessage(key)">{{message.from}}</a>
+          <li>friend 1</li>
+          <li>friend 2</li>
+          <li>friend 3</li>
+          <li>friend 4</li>
+          <li>friend 5</li>
+          <li>friend 6</li>
+        </ul>
+      </div><!-- fromList -->
+    </div><!-- messageList -->
+    <div id="messages">
+      <div id="messagesHeader">
+        <h2>fromName</h2>
+        <button type="submit" class="btn">New Message</button>
+      </div><!-- messagesHeader -->
+      <div id="messagesContent">
+        <ul>
+          <li class="date"
+            ng-repeat-start="message in messages">{{message.timestamp}}</li>
+          <li class="message"
+            ng-repeat-end>
+            <div>
+              <p>{{message.body}}</p>
+            </div>
           </li>
         </ul>
-      </div><!-- messageContainer -->
-      <div id="messageArea">
-
-      </div><!-- #messageArea-->
-    </div>
-
-  </div><!-- Display Messages -->
+        <div id="replyArea">
+          <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."></textarea>
+          <button type="submit" class="btn">Reply</button>
+        </div><!-- replyArea -->
+      </div><!-- messagesContent -->
+    </div><!-- messages -->
+  </div><!-- displaymessages -->
 </section>
