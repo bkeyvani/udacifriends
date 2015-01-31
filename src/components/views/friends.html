@@ -7,9 +7,27 @@
       or <a ng-href="#/login">Login</a></p>
   </div>
 
-  <div ng-show="currentUser" class="displaymessages">
-    <h2>List of your Udacifriends</h2>
+  <div ng-show="currentUser" class="displaymeetings">
+    <h1>Add Friends</h1>
+    <form class="formgroup addmeeting cf"
+      name="addFriendsForm"
+      ng-submit="addFriend()"
+      novalidate>
 
-  </div><!-- Display Messages -->
+      <div class="inputwrapper">
+        <input type="text" placeholder="Search for Udacifriends ..."
+          name="friendName"
+          ng-model="friendName" ng-required="true">
+      </div>
+      <button type="submit" class="btn"
+        ng-disabled="addFriendsForm.$invalid">+</button>
+    </form>
+
+    <h2 ng-if="friendsCnt>0">Your Friends</h2>
+    <div class="meeting" ng-repeat="(key, friend) in friends">
+      <button class="btn btn-delete tooltip" ng-click="deleteFriend(key)">
+        <span>Unfriend this jerk</span></button>
+      <span class="text">{{friend.fullName}}</span>
+    </div><!-- Friends List -->
+  </div><!-- Display Friends -->
 </section>
-
