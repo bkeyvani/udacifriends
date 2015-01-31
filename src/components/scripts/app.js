@@ -19,27 +19,31 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/login.html',
     controller: 'RegistrationController',
     resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
       "currentAuth": ["AuthFactory", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
         return Auth.authObj.$waitForAuth();
       }]
     }
   }).when('/register', {
     templateUrl: 'views/register.html',
-    controller: 'RegistrationController'
+    controller: 'RegistrationController',
+    resolve: {
+      "currentAuth": ["AuthFactory", function(Auth) {
+        return Auth.authObj.$waitForAuth();
+      }]
+    }
   }).when('/friends', {
-    templateUrl: 'views/friends.html'
+    templateUrl: 'views/friends.html',
+    controller: 'FriendsController',
+    resolve: {
+      "currentAuth": ["AuthFactory", function(Auth) {
+        return Auth.authObj.$requireAuth();
+      }]
+    }
   }).when('/messages', {
     templateUrl: 'views/messages.html',
     controller: 'MessagesController',
     resolve: {
-      // controller will not be loaded until $requireAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
       "currentAuth": ["AuthFactory", function(Auth) {
-        // $requireAuth returns a promise so the resolve waits for it to complete
-        // If the promise is rejected, it will throw a $stateChangeError (see above)
         return Auth.authObj.$requireAuth();
       }]
     }
