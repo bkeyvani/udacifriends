@@ -51,7 +51,7 @@ gulp.task('watch', function() {
   gulp.watch(jsSources, ['js']);
   gulp.watch(cssSources, ['css']);
   gulp.watch('src/**/*.html', ['html']);
-  gulp.watch('builds/development/images/**/*.*', ['images']);
+  gulp.watch('src/components/images/**/*.*', ['images']);
 });
 
 gulp.task('connect', function() {
@@ -69,13 +69,13 @@ gulp.task('html', function() {
 });
 
 gulp.task('images', function() {
-  gulp.src('builds/development/images/**/*.*')
+  gulp.src('src/components/images/**/*.*')
     .pipe(gulpif(env === 'production', imagemin({
       progressive: true,
       svgoPlugins: [{ removeViewBox: false }],
       use: [pngcrush()]
     })))
-    .pipe(gulpif(env === 'production', gulp.dest(outputDir + 'images')))
+    .pipe(gulp.dest(outputDir + 'images'))
     .pipe(connect.reload()) });
 
 gulp.task('json', function() {
