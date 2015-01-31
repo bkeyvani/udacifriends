@@ -1,15 +1,15 @@
 app.controller('MessagesController',
-  ['$scope', '$rootScope', '$firebase', 'FIREBASE_URL', 'currentAuth',
-  function($scope, $rootScope, $firebase, FIREBASE_URL, currentAuth) {
+  ['$scope', '$rootScope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'User',
+  function($scope, $rootScope, $firebase, FIREBASE_URL, currentAuth, User) {
 
-    var fb = new Firebase(FIREBASE_URL + 'messages');
-    var messages = $firebase(fb);
+    var currentUser = currentAuth.uid;
+    var ref = new Firebase(FIREBASE_URL).child(currentUser).child('messages');
+    var messages = $firebase(ref);
     var messagesObj = messages.$asObject();
     var messagesArray = messages.$asArray();
 
     console.log('from MessagesController');
     console.log('currentAuth', currentAuth);
-    console.dir(currentAuth);
 
     messagesObj.$loaded().then(function(data) {
       $scope.messages = messagesObj;
@@ -23,14 +23,14 @@ app.controller('MessagesController',
       $rootScope.messageCnt = messagesArray.length;
     });
 
-    $scope.addmessage=function() {
+    $scope.sendMessageTo=function(friendUserId) {
       messages.$push({
         // TODO: add message info
         body: $scope.messageBody,
-        from: currentUser.id, // get currentuser.uid
+        from: currentUser, // get currentUser.uid
         read: false,
         timestamp: Firebase.ServerValue.TIMESTAMP,
-        to: $scope.messageTo// get destinationuser.uid
+        to: friendUserId
       });
     } // addmessage
 
