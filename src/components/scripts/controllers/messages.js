@@ -1,10 +1,15 @@
 app.controller('MessagesController',
-  function($scope, $rootScope, $firebase, FIREBASE_URL) {
+  ['$scope', '$rootScope', '$firebase', 'FIREBASE_URL', 'currentAuth',
+  function($scope, $rootScope, $firebase, FIREBASE_URL, currentAuth) {
 
     var fb = new Firebase(FIREBASE_URL + 'messages');
     var messages = $firebase(fb);
     var messagesObj = messages.$asObject();
     var messagesArray = messages.$asArray();
+
+    console.log('from MessagesController');
+    console.log('currentAuth', currentAuth);
+    console.dir(currentAuth);
 
     messagesObj.$loaded().then(function(data) {
       $scope.messages = messagesObj;
@@ -32,6 +37,5 @@ app.controller('MessagesController',
     $scope.deletemessage=function(key) {
       messages.$remove(key);
     } // deletemessage
-
-  }); // MessagesController
-
+  }
+]); // MessagesController

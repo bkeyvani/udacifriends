@@ -1,6 +1,10 @@
 app.controller('RegistrationController',
-  ['$scope', '$location', 'AuthFactory',
-  function($scope, $location, AuthFactory) {
+  ['$scope', '$location', 'AuthFactory', 'currentAuth',
+  function($scope, $location, AuthFactory, currentAuth) {
+
+    console.log('from RegistrationController');
+    console.log('currentAuth', currentAuth);
+    console.dir(currentAuth);
 
     $scope.login = function() {
       AuthFactory.login($scope.user)
