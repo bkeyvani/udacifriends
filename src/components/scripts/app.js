@@ -47,6 +47,14 @@ app.config(['$routeProvider', function($routeProvider) {
         return Auth.authObj.$requireAuth();
       }]
     }
+  }).when('/', {
+    templateUrl: 'views/home.html',
+    controller: 'homeController',
+    resolve: {
+      "currentAuth": ["AuthFactory", function(Auth) {
+        return Auth.authObj.$waitForAuth();
+      }]
+    }
   }).otherwise({
     redirectTo: '/'
   });
