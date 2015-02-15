@@ -1,4 +1,4 @@
-app.factory('AuthFactory',
+app.factory('AuthFactory', ['$firebase', '$firebaseAuth', 'FIREBASE_URL',
 function($firebase, $firebaseAuth, FIREBASE_URL) {
   var ref = new Firebase(FIREBASE_URL);
 
@@ -48,4 +48,4 @@ function($firebase, $firebaseAuth, FIREBASE_URL) {
   }; // auth
 
   return auth
-});
+}]);
