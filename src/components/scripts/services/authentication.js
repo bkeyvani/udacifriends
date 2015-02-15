@@ -39,7 +39,11 @@ function($firebase, $firebaseAuth, FIREBASE_URL) {
 
     isSignedIn: function() {
       return this.authObj.$getAuth() != null;
-    } // signedIn
+    }, // signedIn
+
+    getCurrentUser: function() {
+      return this.authObj.$getAuth().uid;
+    } // getCUrrentUser
 
   }; // auth
 
