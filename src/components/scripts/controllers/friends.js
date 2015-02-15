@@ -2,7 +2,6 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
   function($scope, $firebase, FIREBASE_URL, currentAuth, Users, User) {
 
     var currentUser = currentAuth.uid;
-    //$scope.friends = {};
     var ref = new Firebase(FIREBASE_URL).child('users').child(currentUser).child('friends');
     var friends = $firebase(ref);
     var friendsObj = friends.$asObject();
@@ -23,7 +22,7 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
     $scope.friend = {};
 
     $scope.addFriend = function() {
-      friendId = $scope.friendKW;
+      friendId = $scope.friendId;
       user = User(friendId);
       user.$loaded().then(function() {
         $scope.friend.friendName = user.getFullName();
@@ -32,7 +31,7 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
           fullName: $scope.friend.friendName,
           date: Firebase.ServerValue.TIMESTAMP
         }).then(function(ref) {
-            $scope.friendName = '';
+            $scope.friendId = '';
           });
       });
     }; // addFriend
@@ -48,22 +47,5 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
     $scope.searchByKeyword = function(kw) {
       Users.byKeyword(kw);
     };
-
-    //$scope.friendsCnt = function () {
-      //cnt = friendsService.getFriendsCnt();
-      //return cnt;
-    //};
-
-    //var fArray = friendsService.fArray;
-    //fArray.$watch(function(event) {
-      //$scope.friendsCnt = fArray.length;
-    //});
-
-    //$scope.friends = friendsService.fObj;
-    //console.log($scope.friends);
-
-    //$scope.addFriend = function() {
-      //friendsService.addFriend($scope.friendId);
-    //};
   }
 ]); // FriendsController
