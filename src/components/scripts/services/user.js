@@ -14,3 +14,25 @@ app.factory('User', ['$FirebaseObject', '$firebase', 'FIREBASE_URL',
     return sync.$asObject(); // this will be an instance of UserFactory
   }
 }]);
+
+app.factory('Users', ['$firebase', 'FIREBASE_URL',
+  function($firebase, FIREBASE_URL) {
+    var ref = new Firebase(FIREBASE_URL).child('users');
+    var sync = $firebase(ref);
+    var usersObj = sync.$asObject();
+    var usersList = sync.$asArray();
+
+    return {
+      all: function() {
+        return usersList;
+      },
+      count: usersList.length,
+      byKeyword: function(kw) {
+        ref.startAt(kw)
+           .endAt(kw)
+           .once('value', function(snap) {
+              console.log(snap);
+           });
+      }
+    }
+}]);
