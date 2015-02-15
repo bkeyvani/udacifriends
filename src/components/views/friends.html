@@ -1,4 +1,4 @@
-<section class="meetings cf">
+<section class="friends cf">
 
   <div ng-hide="currentUser" class="sorry">
     <h1>Sorry</h1>
@@ -7,27 +7,35 @@
       or <a ng-href="#/login">Login</a></p>
   </div>
 
-  <div ng-show="currentUser" class="displaymeetings">
+  <div ng-show="currentUser" class="displayfriends">
     <h1>Add Friends</h1>
-    <form class="formgroup addmeeting cf"
+    <form class="formgroup addfriend cf"
       name="addFriendsForm"
       ng-submit="addFriend()"
       novalidate>
 
       <div class="inputwrapper">
         <input type="text" placeholder="Search for Udacifriends ..."
-          name="friendName"
-          ng-model="friendName" ng-required="true">
-      </div>
+          name="search-friend"
+          ng-model="friendId" ng-required="true">
+          <!--<div class="searchresults"-->
+          <!--ng-show="friendKW">-->
+          <!--<ul>-->
+            <!--<li ng-repeat="user in users | filter:friendName">{{user.firstname}}</li>-->
+          <!--</ul>-->
+        <!--</div>[> searchresults <]-->
+      </div><!-- inputwrapper -->
       <button type="submit" class="btn"
         ng-disabled="addFriendsForm.$invalid">+</button>
     </form>
 
-    <h2 ng-if="friendsCnt>0">Your Friends</h2>
-    <div class="meeting" ng-repeat="(key, friend) in friends">
-      <button class="btn btn-delete tooltip" ng-click="deleteFriend(key)">
-        <span>Unfriend this jerk</span></button>
-      <span class="text">{{friend.fullName}}</span>
-    </div><!-- Friends List -->
+    <div ng-if="friendsCnt>0">
+      <h2 >Your Friends</h2>
+      <div class="friend" ng-repeat="(key, friend) in friends">
+        <button class="btn btn-delete tooltip" ng-click="deleteFriend(key)">
+          <span>Unfriend this jerk</span></button>
+        <span class="text">{{friend.fullName}}</span>
+      </div><!-- Friends List -->
+    </div>
   </div><!-- Display Friends -->
 </section>
