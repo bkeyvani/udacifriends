@@ -504,34 +504,35 @@ nav ul li a:hover {
     width: auto;
 }
 
-.addmeeting {
+.addfriend {
     width:100%;
 }
 
-.addmeeting .inputwrapper {
+.addfriend .inputwrapper {
   margin-right:80px;
+  position: relative;
 }
 
-.addmeeting .inputwrapper input {
+.addfriend .inputwrapper input {
     float: left;
     width: 100%;
 }
 
-.addmeeting button {
+.addfriend button {
   width: 60px;
   margin-left: 20px;
   vertical-align: middle;
 }
 
-.meetings {
+.friends {
   padding-top: 10px;
 }
 
-.meetings h2 {
+.friends h2 {
   padding-bottom: 5px;
 }
 
-.meetings .meeting {
+.friends .friend {
   display: inline-block;
   background: #E5DEC8;
   padding: 5px 20px 8px 15px;
@@ -540,17 +541,17 @@ nav ul li a:hover {
   border: 2px solid white;
 }
 
-.meetings .meeting .btn {
+.friends .friend .btn {
   margin-right: 4px;
   padding: 1px 8px;
 }
 
-.meetings .meeting .text {
+.friends .friend .text {
   display: inline-block;
   vertical-align: bottom;
 }
 
-.meetings .meeting .text a{
+.friends .friend .text a{
   text-decoration: none;
 }
 
@@ -679,4 +680,27 @@ section.messages {
 
 #replyArea button {
   float: right;
+}
+
+/* Search box styles */
+
+.searchresults {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 15px;
+  position: absolute;
+  text-align: initial;
+  top: 42px;
+  width: 100%;
+  z-index: 5;
+}
+
+.searchresults ul li {
+  border-bottom: 1px solid #ccc;
+  padding: 0 0 3px 0;
+}
+
+.searchresults ul li:hover {
+  background-color: rgba(239, 239, 227, 0.5);
 }
