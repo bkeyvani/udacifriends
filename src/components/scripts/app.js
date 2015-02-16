@@ -41,7 +41,7 @@ app.config(['$routeProvider', function($routeProvider) {
     }
   }).when('/messages', {
     templateUrl: 'views/messages.html',
-    controller: 'MessagesController',
+    controller: 'MessagesCtrl',
     resolve: {
       "currentAuth": ["AuthFactory", function(Auth) {
         return Auth.authObj.$requireAuth();

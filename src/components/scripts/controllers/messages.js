@@ -1,15 +1,14 @@
-app.controller('MessagesController',
-  ['$scope', '$rootScope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'User',
-  function($scope, $rootScope, $firebase, FIREBASE_URL, currentAuth, User) {
+app.controller('MessagesCtrl',
+  ['$scope', '$rootScope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'User', 'FriendsFctr',
+  function($scope, $rootScope, $firebase, FIREBASE_URL, currentAuth, User, FriendsFctr) {
 
     var currentUser = currentAuth.uid;
     var ref = new Firebase(FIREBASE_URL).child(currentUser).child('messages');
     var messages = $firebase(ref);
     var messagesObj = messages.$asObject();
     var messagesArray = messages.$asArray();
-
-    console.log('from MessagesController');
-    console.log('currentAuth', currentAuth);
+    var friends = FriendsFctr(currentUser);
+    console.log(friends);
 
     messagesObj.$loaded().then(function(data) {
       $scope.messages = messagesObj;
@@ -38,4 +37,4 @@ app.controller('MessagesController',
       messages.$remove(key);
     } // deletemessage
   }
-]); // MessagesController
+]); // MessagesCtrl
