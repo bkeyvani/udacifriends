@@ -11,18 +11,23 @@
     <h1>Add Friends</h1>
     <form class="formgroup addfriend cf"
       name="addFriendsForm"
-      ng-submit="addFriend()"
+      ng-submit="addFriend($scope.friendId)"
       novalidate>
 
       <div class="inputwrapper">
         <input type="text" placeholder="Search for Udacifriends ..."
           name="search-friend"
-          ng-model="query" ng-required="true">
+          ng-model="query" ng-required="true"
+          ng-change="showDropDown()"
+          ng-init="ddCtrl='true'">
           <div class="searchresults"
-          ng-show="query">
+            ng-show="query && ddCtrl">
           <ul>
-            <li ng-repeat="user in users | filter:search">{{user.firstname}}
-            {{user.lastname}}</li>
+            <li ng-repeat="user in users | filter:search"
+            ng-click="addFriendById(this)">
+              {{user.firstname}}
+              {{user.lastname}}
+            </li>
           </ul>
         </div><!-- searchresults -->
       </div><!-- inputwrapper -->
