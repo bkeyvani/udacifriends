@@ -11,15 +11,8 @@
     <div id="messageList">
       <p id="inbox">Inbox <strong>({{messageCnt}})</strong></p>
       <div id="fromList">
-        <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
-        messages?</p>
         <ul>
           <li>friend 1</li>
-          <li>friend 2</li>
-          <li>friend 3</li>
-          <li>friend 4</li>
-          <li>friend 5</li>
-          <li>friend 6</li>
         </ul>
       </div><!-- fromList -->
     </div><!-- messageList -->
@@ -29,6 +22,8 @@
         <button type="submit" class="btn">New Message</button>
       </div><!-- messagesHeader -->
       <div id="messagesContent">
+        <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
+        messages?</p>
         <ul>
           <li class="date"
             ng-repeat-start="message in messages">{{message.timestamp}}</li>
@@ -40,8 +35,14 @@
           </li>
         </ul>
         <div id="replyArea">
-          <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."></textarea>
-          <button type="submit" class="btn">Reply</button>
+          <form class="formgroup addfriend cf"
+            name="replyForm"
+            ng-submit="reply()"
+            novalidate>
+                <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."
+                  ng-model="replyMessage"></textarea>
+                <button type="submit" class="btn">Reply</button>
+          </form>
         </div><!-- replyArea -->
       </div><!-- messagesContent -->
     </div><!-- messages -->

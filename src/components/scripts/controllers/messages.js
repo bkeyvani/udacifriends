@@ -31,10 +31,15 @@ app.controller('MessagesCtrl',
         timestamp: Firebase.ServerValue.TIMESTAMP,
         to: friendUserId
       });
-    } // addmessage
+    }; // addmessage
 
     $scope.deletemessage=function(key) {
       messages.$remove(key);
-    } // deletemessage
+    }; // deletemessage
+
+    $scope.reply = function() {
+      console.log($scope.replyMessage);
+      $scope.replyMessage = '';
+    };
   }
 ]); // MessagesCtrl
