@@ -57,8 +57,16 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
 
     $scope.search = function(user) {
       if ($scope.query) {
-        return !!((user.firstname.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1
-                || user.lastname.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1));
+        var firstName, lastName, fullName;
+
+        firstName = user.firstname.toLowerCase();
+        lastName = user.lastname.toLowerCase();
+        fullName = firstName + ' ' + lastName;
+        query = $scope.query.toLowerCase();
+
+        return !!((firstName.indexOf(query || '') !== -1 ||
+                   lastName.indexOf(query || '') !== -1 ||
+                   fullName.indexOf(query || '') !== -1));
       }
     };
 
