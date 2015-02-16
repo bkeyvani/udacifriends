@@ -19,19 +19,19 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
       $scope.friendsCnt = friendsArray.length;
     });
 
-    $scope.friend = {};
-
     $scope.addFriend = function() {
-      friendId = $scope.friendId;
+      var friendId, friendName;
+
+      friendId = $scope.query;
       user = User(friendId);
       user.$loaded().then(function() {
-        $scope.friend.friendName = user.getFullName();
+        friendName = user.getFullName();
 
         friends.$set(friendId, {
-          fullName: $scope.friend.friendName,
+          fullName: friendName,
           date: Firebase.ServerValue.TIMESTAMP
         }).then(function(ref) {
-            $scope.friendId = '';
+            $scope.query = '';
           });
       });
     }; // addFriend
@@ -40,12 +40,13 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
       friends.$remove(key);
     }; //deleteFriend
 
-    $scope.getAllUsers = function() {
-      $scope.users = Users.all();
-    }; // getAllUsers
+    $scope.users = Users.all();
 
-    $scope.searchByKeyword = function(kw) {
-      Users.byKeyword(kw);
+    $scope.search = function(user) {
+      if ($scope.query) {
+        return !!((user.firstname.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1
+                || user.lastname.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1));
+      }
     };
   }
 ]); // FriendsController

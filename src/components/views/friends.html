@@ -17,13 +17,14 @@
       <div class="inputwrapper">
         <input type="text" placeholder="Search for Udacifriends ..."
           name="search-friend"
-          ng-model="friendId" ng-required="true">
-          <!--<div class="searchresults"-->
-          <!--ng-show="friendKW">-->
-          <!--<ul>-->
-            <!--<li ng-repeat="user in users | filter:friendName">{{user.firstname}}</li>-->
-          <!--</ul>-->
-        <!--</div>[> searchresults <]-->
+          ng-model="query" ng-required="true">
+          <div class="searchresults"
+          ng-show="query">
+          <ul>
+            <li ng-repeat="user in users | filter:search">{{user.firstname}}
+            {{user.lastname}}</li>
+          </ul>
+        </div><!-- searchresults -->
       </div><!-- inputwrapper -->
       <button type="submit" class="btn"
         ng-disabled="addFriendsForm.$invalid">+</button>
