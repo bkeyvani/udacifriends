@@ -19,7 +19,7 @@
     </div><!-- messageList -->
     <div id="messages">
       <div id="messagesHeader">
-        <h2>From: {{fromName}}</h2>
+        <h2>{{fromName}}</h2>
         <button class="btn"
           ng-click="newMessageTo(activeFriendId)">New Message</button>
       </div><!-- messagesHeader -->
@@ -48,7 +48,7 @@
     </div><!-- messages -->
     <div>
       <form class="formgroup addfriend cf" name="newMessageForm" novalidate
-        ng-submit="sendMessageTo(activeFriendId, newMessage)">
+        ng-submit="sendMessageTo(newMessage)">
         <input type="text" name="message-to" id="messageTo" placeholder="To:"
           ng-model="newMessage.to">
         <textarea name="new-message-body" id="newMessageBody" rows="8" cols="40" placeholder="Write a reply..."

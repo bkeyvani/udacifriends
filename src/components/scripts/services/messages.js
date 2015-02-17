@@ -4,8 +4,9 @@ app.factory('MessagesFctr', ['$firebase', 'FIREBASE_URL',
   function($firebase, FIREBASE_URL) {
 
   return function(userId) {
-    var ref = new Firebase(FIREBASE_URL).child('users').child(userId).child('messages');
-    var messages = $firebase(ref);
+    var ref = new Firebase(FIREBASE_URL).child('messages');
+    //var messages = $firebase(ref);
+    var messages = $firebase(ref.orderByChild("to").startAt(userId).endAt(userId));
     var messagesObj = messages.$asObject();
     var messagesArray = messages.$asArray();
 
@@ -14,17 +15,37 @@ app.factory('MessagesFctr', ['$firebase', 'FIREBASE_URL',
       mObj: messagesObj,
       mArr: messagesArray,
       from: function(uId) {
-        var query;
-        self = this;
-        self.result = {};
+        var fromRef, fm, result;
 
-        query = ref.orderByChild("to").startAt(uId).endAt(uId).on("value",
-          function(snapshot) {
-            self.result = snapshot.val();
-          });
+        fromRef = ref.child(userId).child(uId);
+        fm = $firebase(fromRef);
+        fmObj = fm.$asObject();
+        fmArr = fm.$asArray();
 
-        return self.result;
-      },
+        //fmObj.$loaded().then(function(data) {
+          //self.result = data;
+        //});
+
+        result = {
+          obj: fmObj,
+          arr: fmArr
+        };
+        return result;
+      }, // from
+
+      to: function(message) {
+        var toRef, fromRef, fm;
+
+        toRef = ref.child(message.to);
+        fromRef = toRef.child(userId);
+        fm = $firebase(fromRef);
+
+        fm.$push({
+          body: message.body,
+          read: false,
+          timestamp: Firebase.ServerValue.TIMESTAMP,
+        });
+      } // to
     };
   };
 }]);
