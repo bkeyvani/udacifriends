@@ -10,8 +10,21 @@ app.factory('MessagesFctr', ['$firebase', 'FIREBASE_URL',
     var messagesArray = messages.$asArray();
 
     return {
+      sync: messages,
       mObj: messagesObj,
-      mArr: messagesArray
+      mArr: messagesArray,
+      from: function(uId) {
+        var query;
+        self = this;
+        self.result = {};
+
+        query = ref.orderByChild("to").startAt(uId).endAt(uId).on("value",
+          function(snapshot) {
+            self.result = snapshot.val();
+          });
+
+        return self.result;
+      },
     };
   };
 }]);

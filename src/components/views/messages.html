@@ -12,21 +12,23 @@
       <p id="inbox">Inbox <strong>({{messageCnt}})</strong></p>
       <div id="fromList">
         <ul>
-          <li>friend 1</li>
+          <li ng-repeat="(key, friend) in friends"
+            ng-click="loadMessagesFrom(key, friend)">{{friend.fullName}}</li>
         </ul>
       </div><!-- fromList -->
     </div><!-- messageList -->
     <div id="messages">
       <div id="messagesHeader">
-        <h2>fromName</h2>
-        <button type="submit" class="btn">New Message</button>
+        <h2>From: {{fromName}}</h2>
+        <button class="btn"
+          ng-click="newMessageTo(activeFriendId)">New Message</button>
       </div><!-- messagesHeader -->
       <div id="messagesContent">
-        <p ng-hide="messages">Oops! No messages yet :( Why not try sending some
-        messages?</p>
+        <p ng-hide="fromMessages">Oops! No messages yet!</p>
         <ul>
           <li class="date"
-            ng-repeat-start="message in messages">{{message.timestamp}}</li>
+            ng-repeat-start="message in fromMessages">{{ message.timestamp |
+            date : 'short' }}</li>
           <li class="message"
             ng-repeat-end>
             <div>
@@ -35,16 +37,24 @@
           </li>
         </ul>
         <div id="replyArea">
-          <form class="formgroup addfriend cf"
-            name="replyForm"
-            ng-submit="reply()"
-            novalidate>
-                <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."
-                  ng-model="replyMessage"></textarea>
-                <button type="submit" class="btn">Reply</button>
+          <form class="formgroup addfriend cf" name="replyForm" novalidate
+            ng-submit="reply()">
+            <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."
+              ng-model="replyMessage"></textarea>
+            <button type="submit" class="btn">Reply</button>
           </form>
         </div><!-- replyArea -->
       </div><!-- messagesContent -->
     </div><!-- messages -->
+    <div>
+      <form class="formgroup addfriend cf" name="newMessageForm" novalidate
+        ng-submit="sendMessageTo(activeFriendId, newMessage)">
+        <input type="text" name="message-to" id="messageTo" placeholder="To:"
+          ng-model="newMessage.to">
+        <textarea name="new-message-body" id="newMessageBody" rows="8" cols="40" placeholder="Write a reply..."
+          ng-model="newMessage.body"></textarea>
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </div>
   </div><!-- displaymessages -->
 </section>
