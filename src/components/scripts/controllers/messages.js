@@ -1,12 +1,11 @@
 app.controller('MessagesCtrl',
-  ['$scope', '$rootScope', 'currentAuth', 'MessagesFctr', 'FriendsFctr',
-  function($scope, $rootScope, currentAuth, MessagesFctr, FriendsFctr) {
+  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr',
+  function($scope, currentAuth, MessagesFctr, FriendsFctr) {
 
     var currentUser = currentAuth.uid;
     var friends = FriendsFctr(currentUser);
     var messages = MessagesFctr(currentUser);
 
-    //$rootScope.totalMessageCnt = messages.mArr.length;
     $scope.messageCnt = messages.mArr.length;
 
     messages.mObj.$loaded().then(function(data) {
@@ -26,7 +25,7 @@ app.controller('MessagesCtrl',
 
     $scope.friends = friends.fObj;
     $scope.sendMessageTo = function(message) {
-      MessagesFctr(currentUser).to(message);
+      MessagesFctr(currentUser).addToConv(message);
       messages.mObj.$watch(function() {
         $scope.messages = messages.mObj;
       });
@@ -37,27 +36,17 @@ app.controller('MessagesCtrl',
     }; // deletemessage
 
     $scope.reply = function() {
-      console.log($scope.replyMessage);
       $scope.replyMessage = '';
     };
 
     $scope.loadMessagesFrom = function(userId, friendObj) {
-      //console.log('loadMessagesFrom');
-      //console.log('currentUser: ', currentUser);
-      //console.log('userId: ', userId);
       $scope.fromName = friendObj.fullName;
       $scope.activeFriendId = userId;
       $scope.fromMessages = function(userId) {
-        var foo;
-        //console.log('userId: ', userId);
-        foo = MessagesFctr(currentUser).from(userId);
-        //console.log('foo: ', foo);
-        return foo;
+        var conversation;
+        conversation = MessagesFctr(currentUser).getConvFrom(userId);
+        return conversation.obj;
       }(userId);
-      console.log($scope.fromMessages);
-      //messages.mArr.$watch(function() {
-        //$scope.fromMessages = MessagesFctr(currentUser).from(userId);
-      //});
     };
 
     $scope.newMessageTo = function(userId) {

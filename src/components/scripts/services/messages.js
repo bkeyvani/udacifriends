@@ -5,44 +5,50 @@ app.factory('MessagesFctr', ['$firebase', 'FIREBASE_URL',
 
   return function(userId) {
     var ref = new Firebase(FIREBASE_URL).child('messages');
-    //var messages = $firebase(ref);
-    var messages = $firebase(ref.orderByChild("to").startAt(userId).endAt(userId));
+    var messages = $firebase(ref);
     var messagesObj = messages.$asObject();
     var messagesArray = messages.$asArray();
+
+    var getConvThread = function(userId1, userId2) {
+      var ct, SEP;
+      SEP = '^';
+      ct = [userId1, userId2].sort().join(SEP);
+
+      return ct;
+    };
 
     return {
       sync: messages,
       mObj: messagesObj,
       mArr: messagesArray,
-      from: function(uId) {
+      getConvFrom: function(friendId) {
         var fromRef, fm, result;
 
-        fromRef = ref.child(userId).child(uId);
-        fm = $firebase(fromRef);
-        fmObj = fm.$asObject();
-        fmArr = fm.$asArray();
-
-        //fmObj.$loaded().then(function(data) {
-          //self.result = data;
-        //});
+        ct = getConvThread(userId, friendId);
+        convRef = ref.child(ct);
+        fc = $firebase(convRef); // firebase conversation thread ref.
+        fcObj = fc.$asObject();
+        fcArr = fc.$asArray();
 
         result = {
-          obj: fmObj,
-          arr: fmArr
+          obj: fcObj,
+          arr: fcArr
         };
+
         return result;
       }, // from
 
-      to: function(message) {
-        var toRef, fromRef, fm;
+      addToConv: function(message) {
+        var friendId;
 
-        toRef = ref.child(message.to);
-        fromRef = toRef.child(userId);
-        fm = $firebase(fromRef);
+        friendId = message.to;
+        ct = getConvThread(userId, friendId);
+        convRef = ref.child(ct);
+        fc = $firebase(convRef); // firebase conversation thread ref.
 
-        fm.$push({
+        fc.$push({
           body: message.body,
-          read: false,
+          read: false, // TODO: add read/unread capability
           timestamp: Firebase.ServerValue.TIMESTAMP,
         });
       } // to
