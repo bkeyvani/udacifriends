@@ -1,5 +1,5 @@
-app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'Users', 'User',
-  function($scope, $firebase, FIREBASE_URL, currentAuth, Users, User) {
+app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'Users', 'User', 'SearchFctr',
+  function($scope, $firebase, FIREBASE_URL, currentAuth, Users, User, SearchFctr) {
 
     var currentUser = currentAuth.uid;
     var ref = new Firebase(FIREBASE_URL).child('users').child(currentUser).child('friends');
@@ -37,17 +37,16 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
     }; // addFriend
 
     $scope.addFriendById = function(elem) {
+      // TODO: refactor into search directive
       var user, uid, fullName;
 
-      //console.log('elem: ', elem);
       user = elem.user;
       uid = user.id;
       fullName = user.firstname + ' ' + user.lastname;
       $scope.query = fullName;
       $scope.friendId = uid;
       $scope.ddCtrl = false; // hide dropdown
-      console.log('scope: ', $scope);
-    };
+    }; // addFriendById
 
     $scope.deleteFriend = function(key) {
       friends.$remove(key);
@@ -57,26 +56,16 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
 
     $scope.search = function(user) {
       if ($scope.query) {
-        var firstName, lastName, fullName;
-
-        firstName = user.firstname.toLowerCase();
-        lastName = user.lastname.toLowerCase();
-        fullName = firstName + ' ' + lastName;
-        query = $scope.query.toLowerCase();
-
-        return !!((firstName.indexOf(query || '') !== -1 ||
-                   lastName.indexOf(query || '') !== -1 ||
-                   fullName.indexOf(query || '') !== -1));
+        return SearchFctr(user, $scope.query);
       }
-    };
+    }; // search
 
     $scope.showDropDown = function() {
       $scope.ddCtrl = true;
-    };
+    }; // showDropDown
 
     $scope.hideDropDown = function() {
       $scope.ddCtrl = false;
-      //console.log($scope);
-    };
+    }; // hideDropDown
   }
 ]); // FriendsController

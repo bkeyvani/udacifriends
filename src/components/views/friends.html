@@ -16,17 +16,14 @@
 
       <div class="inputwrapper">
         <input type="text" placeholder="Search for Udacifriends ..."
-          name="search-friend"
-          ng-model="query" ng-required="true"
-          ng-change="showDropDown()"
-          ng-init="ddCtrl='true'">
-          <div class="searchresults"
-            ng-show="query && ddCtrl">
+          name="search-friend" ng-model="query" ng-required="true"
+          ng-change="showDropDown()" ng-init="ddCtrl='true'">
+        <div class="searchresults"
+          ng-show="query && ddCtrl">
           <ul>
             <li ng-repeat="user in users | filter:search"
-            ng-click="addFriendById(this)">
-              {{user.firstname}}
-              {{user.lastname}}
+              ng-click="addFriendById(this)">
+              {{user.firstname}} {{user.lastname}}
             </li>
           </ul>
         </div><!-- searchresults -->
@@ -34,7 +31,6 @@
       <button type="submit" class="btn"
         ng-disabled="addFriendsForm.$invalid">+</button>
     </form>
-
     <div ng-if="friendsCnt>0">
       <h2 >Your Friends</h2>
       <div class="friend" ng-repeat="(key, friend) in friends">
