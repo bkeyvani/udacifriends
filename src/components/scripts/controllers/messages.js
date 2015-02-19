@@ -1,6 +1,6 @@
 app.controller('MessagesCtrl',
-  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr',
-  function($scope, currentAuth, MessagesFctr, FriendsFctr) {
+  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr', 'SearchFctr', 'Users',
+  function($scope, currentAuth, MessagesFctr, FriendsFctr, SearchFctr, Users) {
 
     var currentUser = currentAuth.uid;
     var friends = FriendsFctr(currentUser);
@@ -23,34 +23,79 @@ app.controller('MessagesCtrl',
       $scope.messageCnt = messages.mArr.length;
     });
 
+    $scope.init = function() {
+      $scope.ddCtrl = true;
+      $scope.newMessage = {};
+    }; // init
+
     $scope.friends = friends.fObj;
     $scope.sendMessageTo = function(message) {
       MessagesFctr(currentUser).addToConv(message);
-      messages.mObj.$watch(function() {
-        $scope.messages = messages.mObj;
-      });
-    };
+
+      // clear fields
+      $scope.query = '';
+      $scope.newMessage = {};
+
+      // close new message window
+      // TODO
+
+    }; // sendMessageTo
 
     $scope.deletemessage=function(key) {
-      messages.$remove(key);
+      // TODO
     }; // deletemessage
 
-    $scope.reply = function() {
-      $scope.replyMessage = '';
-    };
+    $scope.reply = function(replyMessage) {
+
+      if ($scope.activeFriendId) {
+        replyMessage.to = $scope.activeFriendId;
+        MessagesFctr(currentUser).addToConv(replyMessage);
+        $scope.replyMessage = {};
+      };
+    }; // reply
 
     $scope.loadMessagesFrom = function(userId, friendObj) {
+      $scope.cnvCnt = 0; // reset conversations for each friend
       $scope.fromName = friendObj.fullName;
       $scope.activeFriendId = userId;
+
       $scope.fromMessages = function(userId) {
         var conversation;
         conversation = MessagesFctr(currentUser).getConvFrom(userId);
+        conversation.arr.$watch(function() {
+          $scope.cnvCnt = conversation.arr.length;
+        });
+
         return conversation.obj;
       }(userId);
-    };
+    }; // loadMessagesFrom
 
-    $scope.newMessageTo = function(userId) {
-      console.log(userId);
-    };
+    $scope.addFriendById = function(elem) {
+      // TODO: refactor into search directive
+      var user, uid, fullName;
+
+      user = elem.user;
+      uid = user.id;
+      fullName = user.firstname + ' ' + user.lastname;
+      $scope.query = fullName;
+      $scope.newMessage.to = uid;
+      $scope.hideDropDown();
+    }; // addFriendById
+
+    $scope.users = Users.all();
+
+    $scope.search = function(user) {
+      if ($scope.query) {
+        return SearchFctr(user, $scope.query);
+      }
+    }; // search
+
+    $scope.showDropDown = function() {
+      $scope.ddCtrl = true;
+    }; // showDropDown
+
+    $scope.hideDropDown = function() {
+      $scope.ddCtrl = false;
+    }; // hideDropDown
   }
 ]); // MessagesCtrl

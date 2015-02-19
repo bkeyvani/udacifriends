@@ -9,7 +9,9 @@
 
   <div ng-show="currentUser" id="messageArea">
     <div id="messageList">
-      <p id="inbox">Inbox <strong>({{messageCnt}})</strong></p>
+      <p id="inbox">Inbox<!-- <strong>({{messageCnt}})</strong> -->
+      <!--TODO: add functionality to show total unread messages in inbox-->
+      </p>
       <div id="fromList">
         <ul>
           <li ng-repeat="(key, friend) in friends"
@@ -23,8 +25,9 @@
         <button class="btn"
           ng-click="newMessageTo(activeFriendId)">New Message</button>
       </div><!-- messagesHeader -->
-      <div id="messagesContent">
-        <p ng-hide="fromMessages">Oops! No messages yet!</p>
+      <div id="messagesContent"
+        ng-show="activeFriendId">
+        <p ng-hide="cnvCnt>0">Oops! No messages yet!</p>
         <ul>
           <li class="date"
             ng-repeat-start="message in fromMessages">{{ message.timestamp |
@@ -38,22 +41,36 @@
         </ul>
         <div id="replyArea">
           <form class="formgroup addfriend cf" name="replyForm" novalidate
-            ng-submit="reply()">
+            ng-submit="reply(replyMessage)">
             <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."
-              ng-model="replyMessage"></textarea>
-            <button type="submit" class="btn">Reply</button>
+              ng-model="replyMessage.body" ng-required="true"></textarea>
+            <button type="submit" class="btn"
+              ng-disabled="replyForm.$invalid">Reply</button>
           </form>
         </div><!-- replyArea -->
       </div><!-- messagesContent -->
     </div><!-- messages -->
     <div>
       <form class="formgroup addfriend cf" name="newMessageForm" novalidate
-        ng-submit="sendMessageTo(newMessage)">
-        <input type="text" name="message-to" id="messageTo" placeholder="To:"
-          ng-model="newMessage.to">
+        ng-model="newMessage" ng-submit="sendMessageTo(newMessage)">
+      <div>
+        <input type="text" placeholder="To: ..."
+          name="search-friend" ng-model="query" ng-required="true"
+          ng-change="showDropDown()" ng-init="init()">
+        <div class="searchresults"
+          ng-show="query && ddCtrl">
+          <ul>
+            <li ng-repeat="user in users | filter:search"
+              ng-click="addFriendById(this)">
+              {{user.firstname}} {{user.lastname}}
+            </li>
+          </ul>
+        </div><!-- searchresults -->
         <textarea name="new-message-body" id="newMessageBody" rows="8" cols="40" placeholder="Write a reply..."
-          ng-model="newMessage.body"></textarea>
-        <button type="submit" class="btn">Send</button>
+          ng-model="newMessage.body" ng-required="true"></textarea>
+        <button type="submit" class="btn"
+          ng-disabled="newMessageForm.$invalid">Send</button>
+      </div><!-- inputwrapper -->
       </form>
     </div>
   </div><!-- displaymessages -->
