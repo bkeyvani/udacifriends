@@ -1,77 +1,92 @@
-<section class="messages cf">
-
-  <div ng-hide="currentUser" class="sorry">
-    <h1>Sorry</h1>
-    <p>Only registered Udacifriends can send and receive messages.</p>
-    <p>Please <a ng-href="#/register">Register</a>
-      or <a ng-href="#/login">Login</a></p>
-  </div>
-
-  <div ng-show="currentUser" id="messageArea">
-    <div id="messageList">
-      <p id="inbox">Inbox<!-- <strong>({{messageCnt}})</strong> -->
-      <!--TODO: add functionality to show total unread messages in inbox-->
-      </p>
-      <div id="fromList">
-        <ul>
-          <li ng-repeat="(key, friend) in friends"
-            ng-click="loadMessagesFrom(key, friend)">{{friend.fullName}}</li>
-        </ul>
-      </div><!-- fromList -->
-    </div><!-- messageList -->
-    <div id="messages">
-      <div id="messagesHeader">
-        <h2>{{fromName}}</h2>
-        <button class="btn"
-          ng-click="newMessageTo(activeFriendId)">New Message</button>
-      </div><!-- messagesHeader -->
-      <div id="messagesContent"
-        ng-show="activeFriendId">
-        <p ng-hide="cnvCnt>0">Oops! No messages yet!</p>
-        <ul>
-          <li class="date"
-            ng-repeat-start="message in fromMessages">{{ message.timestamp |
-            date : 'short' }}</li>
-          <li class="message"
-            ng-repeat-end>
-            <div>
-              <p>{{message.body}}</p>
+<section class="well">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <h3 class="panel-title pull-left" style="padding-top: 7.5px;">Inbox</h3>
+      <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+        data-target="#newMessageModal">
+        New Message
+      </button>
+    </div><!-- panel-heading -->
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12 col-md-3">
+              <div class="list-group">
+                <a class="list-group-item" ng-repeat="(key, friend) in friends"
+                  ng-click="loadMessagesFrom(key, friend)">{{friend.fullName}}</a>
+              </div>
             </div>
-          </li>
-        </ul>
-        <div id="replyArea">
-          <form class="formgroup addfriend cf" name="replyForm" novalidate
-            ng-submit="reply(replyMessage)">
-            <textarea name="reply" rows="8" cols="40" placeholder="Write a reply..."
-              ng-model="replyMessage.body" ng-required="true"></textarea>
-            <button type="submit" class="btn"
-              ng-disabled="replyForm.$invalid">Reply</button>
+            <div class="hidden-xs hidden-sm col-md-9" id="message-panel">
+              <div class="panel panel-default"
+                ng-show="activeFriendId">
+                <div class="panel-body">
+                  <div id="messagesContent"
+                    ng-show="activeFriendId">
+                    <p ng-hide="cnvCnt>0">Oops! No messages yet!</p>
+                    <ul class="list-group">
+                      <li class="list-group-item"
+                        ng-repeat="message in fromMessages">
+                        <p class="text-center">
+                        <small>
+                          <strong>{{message.from}}:</strong> <em>{{ message.timestamp | date : 'short' }}</em>
+                        </small>
+                        </p>
+                          <p>{{message.body}}</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- panel-body -->
+                <div class="panel-footer">
+                  <form name="replyForm" novalidate
+                    ng-submit="reply(replyMessage)">
+                    <div class="form-group">
+                      <textarea class="form-control"
+                        id="message-text" placeholder="Write a reply..."
+                        ng-model="replyMessage.body"
+                        ng-required="true"></textarea>
+                      <button
+                        type="submit" class="btn btn-primary"
+                        ng-disabled="replyForm.$invalid">Reply</button>
+                    </div><!-- .form-group -->
+                  </form>
+                </div><!-- panel-footer -->
+              </div><!-- panel -->
+            </div><!-- #message-panel -->
+          </div><!-- row -->
+        </div><!-- col-xs-12 -->
+      </div><!-- row -->
+    </div><!-- panel-body -->
+  </div><!-- panel -->
+  <!-- New Message Modal -->
+  <div class="modal fade" id="newMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+        </div><!-- .modal header -->
+        <div class="modal-body">
+          <form name="newMessageForm" novalidate
+            ng-model="newMessage" ng-submit="sendMessageTo(newMessage)">
+
+            <div class="form-group">
+              <label for="search-friend" class="control-label">To:</label>
+              <input type="text" class="form-control" id="searchFriend"
+              name="search-friend" ng-model="query" ng-required="true">
+            </div><!-- .form-group -->
+            <div class="form-group">
+              <label for="message-text" class="control-label">Message:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div><!-- .form-group -->
           </form>
-        </div><!-- replyArea -->
-      </div><!-- messagesContent -->
-    </div><!-- messages -->
-    <div>
-      <form class="formgroup addfriend cf" name="newMessageForm" novalidate
-        ng-model="newMessage" ng-submit="sendMessageTo(newMessage)">
-      <div>
-        <input type="text" placeholder="To: ..."
-          name="search-friend" ng-model="query" ng-required="true"
-          ng-change="showDropDown()" ng-init="init()">
-        <div class="searchresults"
-          ng-show="query && ddCtrl">
-          <ul>
-            <li ng-repeat="user in users | filter:search"
-              ng-click="addFriendById(this)">
-              {{user.firstname}} {{user.lastname}}
-            </li>
-          </ul>
-        </div><!-- searchresults -->
-        <textarea name="new-message-body" id="newMessageBody" rows="8" cols="40" placeholder="Write a reply..."
-          ng-model="newMessage.body" ng-required="true"></textarea>
-        <button type="submit" class="btn"
-          ng-disabled="newMessageForm.$invalid">Send</button>
-      </div><!-- inputwrapper -->
-      </form>
-    </div>
-  </div><!-- displaymessages -->
+        </div><!-- .modal-body -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"
+            ng-disabled="newMessageForm.$invalid">Send</button>
+        </div><!-- .modal-footer -->
+      </div><!-- .modal-content -->
+    </div><!-- .modal-dialog  -->
+  </div><!-- #newMessageModal -->
 </section>
