@@ -12,26 +12,32 @@
     <form  class="col-xs-12" name="addFriendsForm" novalidate
       ng-submit="addFriend($scope.friendId)">
       <div class="form-group">
-        <div class="input-group">
-          <label for="search-friends" class="sr-only">Search for Udacifriends</label>
-          <input type="text" placeholder="Search for Udacifriends ..."
-            name="search-friend" class="form-control input-lg"
-            ng-model="query" ng-required="true" ng-change="showDropDown()"
-            ng-init="ddCtrl='true'">
-          <span class="input-group-btn">
-            <button class="btn btn-default btn-lg" type="submit"
-              ng-disabled="addFriendsForm.$invalid">+</button>
-          </span>
-          <div class="searchresults"
-            ng-show="query && ddCtrl">
-            <ul>
-              <li ng-repeat="user in users | filter:search"
-                ng-click="addFriendById(this)">
-                {{user.firstname}} {{user.lastname}}
-              </li>
-            </ul>
-          </div><!-- searchresults -->
-        </div><!-- input-group -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group">
+              <label for="search-friends" class="sr-only">Search for Udacifriends</label>
+              <input type="text" placeholder="Search for Udacifriends ..."
+              name="search-friend" class="form-control input-lg"
+              ng-model="query" ng-required="true" ng-change="showDropDown()"
+              ng-init="ddCtrl='true'">
+              <span class="input-group-btn">
+                <button class="btn btn-success btn-lg" type="submit"
+                  ng-disabled="addFriendsForm.$invalid">+</button>
+              </span>
+            </div><!-- input-group -->
+            </div><!-- col-xs-12 -->
+            <div class="col-xs-12">
+              <div class="searchresults" ng-show="query && ddCtrl">
+                <div class="list-group">
+                  <a class="list-group-item"
+                    ng-repeat="user in users | filter:search"
+                    ng-click="addFriendById(user)">
+                    {{user.firstname}} {{user.lastname}}
+                  </a>
+                </div><!-- list-group -->
+              </div><!-- searchresults -->
+            </div><!-- col-xs-12 -->
+          </div><!-- row -->
       </div><!-- form-group -->
     </form>
   </div><!-- row -->

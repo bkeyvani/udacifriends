@@ -36,15 +36,14 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
       });
     }; // addFriend
 
-    $scope.addFriendById = function(elem) {
+    $scope.addFriendById = function(user) {
       // TODO: refactor into search directive
-      var user, uid, fullName;
+      console.log(user);
+      var fullName;
 
-      user = elem.user;
-      uid = user.id;
       fullName = user.firstname + ' ' + user.lastname;
       $scope.query = fullName;
-      $scope.friendId = uid;
+      $scope.friendId = user.$id;
       $scope.ddCtrl = false; // hide dropdown
     }; // addFriendById
 
