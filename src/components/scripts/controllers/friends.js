@@ -66,5 +66,11 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
     $scope.hideDropDown = function() {
       $scope.ddCtrl = false;
     }; // hideDropDown
+
+    $scope.newMessage = function(userId) {
+    console.log('//TODO: comming soon to every UdaciFriends app near you!');
+    // TODO: implement this feature to use the functionality in messages
+    // newMessage.
+    };
   }
 ]); // FriendsController
