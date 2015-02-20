@@ -1,39 +1,72 @@
-<section class="register">
-  <form name="reg_form"
-    ng-submit="register()"
-    novalidate>
-
+<section class="well">
+  <form name="regform" novalidate
+    ng-submit="register()">
     <h1>Register</h1>
     <p>To access site features</p>
 
-    <p class="error formerror" ng-show="message">{{message}}</p>
+    <div class="alert alert-danger" role="alert"
+      ng-show="message">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{message}}
+    </div>
 
-    <input type="firstname" name="firstname" placeholder="First Name"
-      ng-model="user.firstname" ng-required="true" autofocous>
-    <p class="error validationerror"
-      ng-show="reg_form.firstname.$invalid && reg_form.firstname.$touched">
-      First Name is required</p>
+    <div class="form-group">
+      <label for="firstname" class="sr-only">First Name</label>
+      <input type="text" name="firstname" placeholder="First Name"
+        class="form-control input-lg" autofocus
+        ng-model="user.firstname" ng-required="true">
+      <div class="alert alert-danger" role="alert"
+        ng-show="regform.firstname.$invalid && regform.firstname.$touched">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        First Name is required
+      </div>
+    </div>
 
-    <input type="lastname" name="lastname" placeholder="Last Name"
-      ng-model="user.lastname" ng-required="true">
-    <p class="error validationerror"
-      ng-show="reg_form.lastname.$invalid && reg_form.lastname.$touched">
-      Last Name is required</p>
+    <div class="form-group">
+      <label for="lastname" class="sr-only">Last Name</label>
+      <input type="text" name="lastname" placeholder="Last Name"
+        class="form-control input-lg" autofocus
+        ng-model="user.lastname" ng-required="true">
+      <div class="alert alert-danger" role="alert"
+        ng-show="regform.lastname.$invalid && regform.lastname.$touched">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Last Name is required
+      </div>
+    </div>
 
-    <input type="email" name="email" placeholder="Email"
-      ng-model="user.email" ng-required="true">
-    <p class="error validationerror"
-      ng-show="reg_form.email.$invalid && reg_form.email.$touched">
-      Must be a valid email</p>
+    <div class="form-group">
+      <label for="email" class="sr-only">Email Address</label>
+      <input type="text" name="email" placeholder="Email"
+        class="form-control input-lg" autofocus
+        ng-model="user.email" ng-required="true">
+      <div class="alert alert-danger" role="alert"
+        ng-show="regform.email.$invalid && regform.email.$touched">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Must be a valid email
+      </div>
+    </div>
 
-    <input type="password" name="password" placeholder="Password"
-      ng-model="user.password" ng-required="true">
-    <p class="error validationerror"
-      ng-show="reg_form.password.$invalid && reg_form.password.$touched">
-      password is required</p>
+    <div class="form-group">
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" placeholder="Password"
+      class="form-control input-lg"
+        ng-model="user.password" ng-required="true">
+      <div class="alert alert-danger" role="alert"
+        ng-show="regform.password.$invalid && regform.password.$touched">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Password is required
+      </div>
+    </div>
 
-    <button type="submit" class="btn"
-      ng-disabled="reg_form.$invalid">Register</button>
-    <p>or <a href="#/login">login</a></p>
+    <button type="submit" class="btn btn-lg btn-primary btn-block"
+      ng-disabled="regform.$invalid">Register</button>
+    <div class="form-group">
+      <p class="text-center">or <a href="#/login">login</a></p>
+    </div>
   </form>
 </section>
