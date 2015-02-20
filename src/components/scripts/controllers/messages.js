@@ -1,11 +1,18 @@
 app.controller('MessagesCtrl',
-  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr', 'SearchFctr', 'Users',
-  function($scope, currentAuth, MessagesFctr, FriendsFctr, SearchFctr, Users) {
+  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr', 'SearchFctr', 'Users', 'User',
+  function($scope, currentAuth, MessagesFctr, FriendsFctr, SearchFctr, Users, User) {
 
-    var currentUser = currentAuth.uid;
-    var friends = FriendsFctr(currentUser);
-    var messages = MessagesFctr(currentUser);
+    var currentUser = {};
+    currentUser.id = currentAuth.uid;
+    var user = User(currentUser.id);
+    var friends = FriendsFctr(currentUser.id);
+    var messages = MessagesFctr(currentUser.id);
 
+    user.$loaded(function() {
+      currentUser.firstname = user.firstname;
+    });
+
+    console.log('name: ', currentUser.firstname);
     $scope.messageCnt = messages.mArr.length;
 
     messages.mObj.$loaded().then(function(data) {
@@ -30,7 +37,8 @@ app.controller('MessagesCtrl',
 
     $scope.friends = friends.fObj;
     $scope.sendMessageTo = function(message) {
-      MessagesFctr(currentUser).addToConv(message);
+      message.fromName = currentUser.firstname;
+      MessagesFctr(currentUser.id).addToConv(message);
 
       // clear fields
       $scope.query = '';
@@ -48,8 +56,9 @@ app.controller('MessagesCtrl',
     $scope.reply = function(replyMessage) {
 
       if ($scope.activeFriendId) {
+        replyMessage.fromName = currentUser.firstname;
         replyMessage.to = $scope.activeFriendId;
-        MessagesFctr(currentUser).addToConv(replyMessage);
+        MessagesFctr(currentUser.id).addToConv(replyMessage);
         $scope.replyMessage = {};
       };
     }; // reply
@@ -61,7 +70,7 @@ app.controller('MessagesCtrl',
 
       $scope.fromMessages = function(userId) {
         var conversation;
-        conversation = MessagesFctr(currentUser).getConvFrom(userId);
+        conversation = MessagesFctr(currentUser.id).getConvFrom(userId);
         conversation.arr.$watch(function() {
           $scope.cnvCnt = conversation.arr.length;
         });

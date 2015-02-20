@@ -47,6 +47,7 @@ app.factory('MessagesFctr', ['$firebase', 'FIREBASE_URL',
         fc = $firebase(convRef); // firebase conversation thread ref.
 
         fc.$push({
+          from: message.fromName,
           body: message.body,
           read: false, // TODO: add read/unread capability
           timestamp: Firebase.ServerValue.TIMESTAMP,
