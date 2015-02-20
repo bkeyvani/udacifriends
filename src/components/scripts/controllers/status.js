@@ -1,9 +1,9 @@
-app.controller('StatusController',
-function($scope, $rootScope, $firebase, AuthFactory, FIREBASE_URL, $location) {
+app.controller('StatusController', ['$scope', '$rootScope', '$location', '$firebase', 'AuthFactory', 'FIREBASE_URL',
+  function($scope, $rootScope, $location, $firebase, AuthFactory, FIREBASE_URL) {
 
   $scope.logout = function() {
     AuthFactory.logout();
-  } // logout
+  }; // logout
 
   $rootScope.authObj = AuthFactory.authObj;
 
@@ -17,6 +17,7 @@ function($scope, $rootScope, $firebase, AuthFactory, FIREBASE_URL, $location) {
       });
     } else {
         $rootScope.currentUser = null;
+        $location.path('/logout'); // TODO: add a separate logout page (?)
     }
   }); // authObj $onAuth event
-});
+}]);
