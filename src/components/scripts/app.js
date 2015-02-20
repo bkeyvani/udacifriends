@@ -49,7 +49,7 @@ app.config(['$routeProvider', function($routeProvider) {
     }
   }).when('/', {
     templateUrl: 'views/home.html',
-    controller: 'homeController',
+    controller: 'HomeCtrl',
     resolve: {
       "currentAuth": ["AuthFactory", function(Auth) {
         return Auth.authObj.$waitForAuth();
