@@ -26,13 +26,13 @@
                     <p ng-hide="cnvCnt>0">Oops! No messages yet!</p>
                     <ul class="list-group">
                       <li class="list-group-item"
-                        ng-repeat="message in fromMessages">
-                        <p class="text-center">
-                        <small>
-                          <strong>{{message.from}}:</strong> <em>{{ message.timestamp | date : 'short' }}</em>
-                        </small>
-                        </p>
-                          <p>{{message.body}}</p>
+                      ng-repeat="message in fromMessages">
+                      <p class="text-center">
+                      <small>
+                        <strong>{{message.from}}:</strong> <em>{{ message.timestamp | date : 'short' }}</em>
+                      </small>
+                      </p>
+                      <p>{{message.body}}</p>
                       </li>
                     </ul>
                   </div>
@@ -42,7 +42,7 @@
                     ng-submit="reply(replyMessage)">
                     <div class="form-group">
                       <textarea class="form-control"
-                        id="message-text" placeholder="Write a reply..."
+                        id="reply-message-text" placeholder="Write a reply..."
                         ng-model="replyMessage.body"
                         ng-required="true"></textarea>
                       <button
@@ -62,30 +62,40 @@
   <div class="modal fade" id="newMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-        </div><!-- .modal header -->
-        <div class="modal-body">
-          <form name="newMessageForm" novalidate
-            ng-model="newMessage" ng-submit="sendMessageTo(newMessage)">
+        <form name="newMessageForm" novalidate
+          ng-model="newMessage" ng-submit="sendMessageTo(newMessage)">
 
-            <div class="form-group">
-              <label for="search-friend" class="control-label">To:</label>
-              <input type="text" class="form-control" id="searchFriend"
-              name="search-friend" ng-model="query" ng-required="true">
-            </div><!-- .form-group -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+          </div><!-- .modal header -->
+          <div class="modal-body">
+            <label for="search-friends" class="sr-only">Search for Udacifriends</label>
+            <input type="text" placeholder="Search for Udacifriends ..."
+              name="search-friend" class="form-control input-lg"
+              ng-model="query" ng-required="true" ng-change="showDropDown()"
+              ng-init="ddCtrl='true'">
+            <div class="searchresults" ng-show="query && ddCtrl">
+              <div class="list-group">
+                <a class="list-group-item"
+                  ng-repeat="user in users | filter:search"
+                  ng-click="addFriendById(user)">
+                  {{user.firstname}} {{user.lastname}}
+                </a>
+              </div><!-- list-group -->
+            </div><!-- searchresults -->
             <div class="form-group">
               <label for="message-text" class="control-label">Message:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+              <textarea class="form-control" id="new-message-text"
+                ng-model="newMessage.body" ng-required="true"></textarea>
             </div><!-- .form-group -->
-          </form>
-        </div><!-- .modal-body -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary"
-            ng-disabled="newMessageForm.$invalid">Send</button>
-        </div><!-- .modal-footer -->
+          </div><!-- .modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary"
+              ng-disabled="newMessageForm.$invalid">Send</button>
+          </div><!-- .modal-footer -->
+        </form>
       </div><!-- .modal-content -->
     </div><!-- .modal-dialog  -->
   </div><!-- #newMessageModal -->

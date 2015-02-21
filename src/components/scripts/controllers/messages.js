@@ -12,7 +12,6 @@ app.controller('MessagesCtrl',
       currentUser.firstname = user.firstname;
     });
 
-    console.log('name: ', currentUser.firstname);
     $scope.messageCnt = messages.mArr.length;
 
     messages.mObj.$loaded().then(function(data) {
@@ -37,7 +36,9 @@ app.controller('MessagesCtrl',
 
     $scope.friends = friends.fObj;
     $scope.sendMessageTo = function(message) {
+      message.to = $scope.friendId;
       message.fromName = currentUser.firstname;
+      console.log('message: ', message);
       MessagesFctr(currentUser.id).addToConv(message);
 
       // clear fields
@@ -79,16 +80,14 @@ app.controller('MessagesCtrl',
       }(userId);
     }; // loadMessagesFrom
 
-    $scope.addFriendById = function(elem) {
+    $scope.addFriendById = function(user) {
       // TODO: refactor into search directive
-      var user, uid, fullName;
+      var fullName;
 
-      user = elem.user;
-      uid = user.id;
       fullName = user.firstname + ' ' + user.lastname;
       $scope.query = fullName;
-      $scope.newMessage.to = uid;
-      $scope.hideDropDown();
+      $scope.friendId = user.$id;
+      $scope.ddCtrl = false; // hide dropdown
     }; // addFriendById
 
     $scope.users = Users.all();
