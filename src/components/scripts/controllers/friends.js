@@ -38,7 +38,6 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
 
     $scope.addFriendById = function(user) {
       // TODO: refactor into search directive
-      console.log(user);
       var fullName;
 
       fullName = user.firstname + ' ' + user.lastname;
