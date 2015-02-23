@@ -17,8 +17,10 @@ var env,
     jsonSources,
     outputDir,
 
-//env = process.env.NODE_ENV || 'development';
-env = process.env.NODE_ENV || 'production';
+env = process.env.NODE_ENV || 'development';
+//env = process.env.NODE_ENV || 'production'; // uncomment this line and comment
+                                              // line above to create a
+                                              // production build
 
 if (env==='development') {
   outputDir = 'builds/development/';
