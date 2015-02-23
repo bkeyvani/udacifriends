@@ -15,4 +15,4 @@ app.factory('SearchFctr', [function() {
                  fullName.indexOf(query || '') !== -1));
     }
   };
-}]);
+}]); //SearchFctr

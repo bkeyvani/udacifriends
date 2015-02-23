@@ -79,10 +79,4 @@ gulp.task('images', function() {
     .pipe(gulp.dest(outputDir + 'images'))
     .pipe(connect.reload()) });
 
-gulp.task('json', function() {
-  gulp.src('builds/development/js/*.json')
-    .pipe(gulpif(env === 'production', jsonminify()))
-    .pipe(gulpif(env === 'production', gulp.dest('builds/production/js')))
-    .pipe(connect.reload()) });
-
-gulp.task('default', ['html', 'css', 'json', 'js', 'images', 'connect', 'watch']);
+gulp.task('default', ['html', 'css', 'js', 'images', 'connect', 'watch']);

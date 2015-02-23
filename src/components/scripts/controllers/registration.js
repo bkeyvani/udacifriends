@@ -1,12 +1,13 @@
-app.controller('RegistrationController',
-  ['$scope', '$location', 'AuthFactory', 'currentAuth',
-  function($scope, $location, AuthFactory, currentAuth) {
+// Registration Contraller
+
+app.controller('RegistrationCtrl', ['$scope', '$location', 'AuthFctr', 'currentAuth',
+  function($scope, $location, AuthFctr, currentAuth) {
 
     if (currentAuth) {  // if a user is already logged in
       $location.path('/messages');
     } else {
       $scope.login = function() {
-        AuthFactory.login($scope.user)
+        AuthFctr.login($scope.user)
         .then(function() {
           $location.path('/messages');
         }).catch(function(error) {
@@ -15,7 +16,7 @@ app.controller('RegistrationController',
       };
 
       $scope.register = function() {
-        AuthFactory.register($scope.user)
+        AuthFctr.register($scope.user)
         .then(function(regUser) {
           $scope.login();
         }).catch(function(error) {
@@ -24,4 +25,4 @@ app.controller('RegistrationController',
       }
     }
   }
-]);
+]); // RegistrationCtrl

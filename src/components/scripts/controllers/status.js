@@ -1,12 +1,14 @@
-app.controller('StatusController', ['$scope', '$rootScope', '$location', '$firebase', 'AuthFactory', 'FIREBASE_URL',
-  function($scope, $rootScope, $location, $firebase, AuthFactory, FIREBASE_URL) {
+// Status Controller
+
+app.controller('StatusCtrl', ['$scope', '$rootScope', '$location', '$firebase', 'AuthFctr', 'FIREBASE_URL',
+  function($scope, $rootScope, $location, $firebase, AuthFctr, FIREBASE_URL) {
 
     $rootScope.location = $location;
     $scope.logout = function() {
-      AuthFactory.logout();
+      AuthFctr.logout();
     }; // logout
 
-    $rootScope.authObj = AuthFactory.authObj;
+    $rootScope.authObj = AuthFctr.authObj;
 
     $rootScope.authObj.$onAuth(function(authData) {
       if (authData) {
@@ -22,4 +24,4 @@ app.controller('StatusController', ['$scope', '$rootScope', '$location', '$fireb
       }
     }); // authObj $onAuth event
   }
-]);
+]); // StatusCtrl

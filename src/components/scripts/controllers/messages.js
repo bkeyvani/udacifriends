@@ -1,10 +1,11 @@
-app.controller('MessagesCtrl',
-  ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr', 'SearchFctr', 'Users', 'User',
-  function($scope, currentAuth, MessagesFctr, FriendsFctr, SearchFctr, Users, User) {
+// Messages Controller
+
+app.controller('MessagesCtrl', ['$scope', 'currentAuth', 'MessagesFctr', 'FriendsFctr', 'SearchFctr', 'UsersFctr', 'UserFctr',
+  function($scope, currentAuth, MessagesFctr, FriendsFctr, SearchFctr, UsersFctr, UserFctr) {
 
     var currentUser = {};
     currentUser.id = currentAuth.uid;
-    var user = User(currentUser.id);
+    var user = UserFctr(currentUser.id);
     var friends = FriendsFctr(currentUser.id);
     var messages = MessagesFctr(currentUser.id);
 
@@ -90,7 +91,7 @@ app.controller('MessagesCtrl',
       $scope.ddCtrl = false; // hide dropdown
     }; // addFriendById
 
-    $scope.users = Users.all();
+    $scope.users = UsersFctr.all();
 
     $scope.search = function(user) {
       if ($scope.query) {

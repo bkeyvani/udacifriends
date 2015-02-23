@@ -17,25 +17,25 @@ app.run(["$rootScope", "$location", function($rootScope, $location) {
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {
     templateUrl: 'views/login.html',
-    controller: 'RegistrationController',
+    controller: 'RegistrationCtrl',
     resolve: {
-      "currentAuth": ["AuthFactory", function(Auth) {
+      "currentAuth": ["AuthFctr", function(Auth) {
         return Auth.authObj.$waitForAuth();
       }]
     }
   }).when('/register', {
     templateUrl: 'views/register.html',
-    controller: 'RegistrationController',
+    controller: 'RegistrationCtrl',
     resolve: {
-      "currentAuth": ["AuthFactory", function(Auth) {
+      "currentAuth": ["AuthFctr", function(Auth) {
         return Auth.authObj.$waitForAuth();
       }]
     }
   }).when('/friends', {
     templateUrl: 'views/friends.html',
-    controller: 'FriendsController',
+    controller: 'FriendsCtrl',
     resolve: {
-      "currentAuth": ["AuthFactory", function(Auth) {
+      "currentAuth": ["AuthFctr", function(Auth) {
         return Auth.authObj.$requireAuth();
       }]
     }
@@ -43,7 +43,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/messages.html',
     controller: 'MessagesCtrl',
     resolve: {
-      "currentAuth": ["AuthFactory", function(Auth) {
+      "currentAuth": ["AuthFctr", function(Auth) {
         return Auth.authObj.$requireAuth();
       }]
     }
@@ -51,7 +51,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/home.html',
     controller: 'HomeCtrl',
     resolve: {
-      "currentAuth": ["AuthFactory", function(Auth) {
+      "currentAuth": ["AuthFctr", function(Auth) {
         return Auth.authObj.$waitForAuth();
       }]
     }

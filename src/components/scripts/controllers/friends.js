@@ -1,5 +1,7 @@
-app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'Users', 'User', 'SearchFctr',
-  function($scope, $firebase, FIREBASE_URL, currentAuth, Users, User, SearchFctr) {
+// Friends Controller
+
+app.controller('FriendsCtrl', ['$scope', '$firebase', 'FIREBASE_URL', 'currentAuth', 'UsersFctr', 'UserFctr', 'SearchFctr',
+  function($scope, $firebase, FIREBASE_URL, currentAuth, UsersFctr, UserFctr, SearchFctr) {
 
     var currentUser = currentAuth.uid;
     var ref = new Firebase(FIREBASE_URL).child('users').child(currentUser).child('friends');
@@ -23,7 +25,7 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
       var friendId, friendName;
 
       friendId = $scope.friendId;
-      user = User(friendId);
+      user = UserFctr(friendId);
       user.$loaded().then(function() {
         friendName = user.getFullName();
 
@@ -50,7 +52,7 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
       friends.$remove(key);
     }; //deleteFriend
 
-    $scope.users = Users.all();
+    $scope.users = UsersFctr.all();
 
     $scope.search = function(user) {
       if ($scope.query) {
@@ -72,4 +74,4 @@ app.controller('FriendsController', ['$scope', '$firebase', 'FIREBASE_URL', 'cur
     // newMessage.
     };
   }
-]); // FriendsController
+]); // FriendsCtrl
