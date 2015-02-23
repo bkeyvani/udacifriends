@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     minifyHTML = require('gulp-minify-html'),
+    minifyCSS = require('gulp-minify-css'),
     jsonminify = require('gulp-jsonminify'),
     imagemin = require('gulp-imagemin'),
     pngcrush = require('imagemin-pngcrush'),
@@ -16,7 +17,8 @@ var env,
     jsonSources,
     outputDir,
 
-env = process.env.NODE_ENV || 'development';
+//env = process.env.NODE_ENV || 'development';
+env = process.env.NODE_ENV || 'production';
 
 if (env==='development') {
   outputDir = 'builds/development/';
@@ -29,6 +31,7 @@ jsSources = ['src/components/scripts/app.js',
              'src/components/scripts/services/*.js',
              'src/components/scripts/controllers/*.js',
              'src/components/scripts/misc/*.js'];
+
 htmlSources = ['src/*.html', 'src/components/**/*.html'];
 
 cssSources = ['src/components/css/*.css'];
@@ -45,9 +48,11 @@ gulp.task('js', function() {
 gulp.task('css', function() {
   gulp.src('src/components/css/*.css')
     .pipe(concat('style.css'))
+    .pipe(gulpif(env === 'production', minifyCSS({keepBreaks:true})))
     .pipe(gulp.dest(outputDir + 'css'))
     .pipe(connect.reload())
 });
+
 gulp.task('watch', function() {
   gulp.watch(jsSources, ['js']);
   gulp.watch(cssSources, ['css']);
