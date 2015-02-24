@@ -1,6 +1,10 @@
 <section class="jumbotron text-center">
   <h2>Welcome to UdaciFriends</h2>
   <p>
-    <a href="#/login">Login</a> or <a href="#/register">Register</a> to interact with awesome friends!
+    <span ng-hide="currentUser">
+      <a href="#/login">Login</a> or <a href="#/register">Register</a> to&nbsp;
+    </span>
+    <span ng-show="currentUser">Where Udacifriends </span>
+    <span>interact with awesome friends!</span>
   </p>
 </section>
