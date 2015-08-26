@@ -19,8 +19,14 @@ user-friendly and intuative interface which:
   - [ruby](https://www.ruby-lang.org/)
   - [sass](http://sass-lang.com/)
   - [compass](http://compass-style.org/)
+
 2. Clone this repository into your local machine using the terminal (mac) or
-Gitbash (PC) `> git clone https://github.gatech.edu/bkeyvani3/udacifriends.git`
+Gitbash (PC)
+
+```shell
+$ git clone https://github.com/bkeyvani/udacifriends.git
+```
+
 3. CD to the folder `cd udacifriends`
 4. Run `> npm-install` to install the project dependencies
 5. Run the Gulp command `> gulp`
